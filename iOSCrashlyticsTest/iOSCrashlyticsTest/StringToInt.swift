@@ -40,7 +40,7 @@ class StringToInt: ObservableObject {
                 return result
             }
         }
-        throw ToIntError.recoverableError
+        throw ToIntError.simpleDomainError
     }
     func recoverableErrorExample(string: String) -> Result<Int, ToIntError> {
         do {

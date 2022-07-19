@@ -26,13 +26,15 @@ struct ContentView: View {
     //    }
     @ObservedObject var stringToIntObject: StringToInt
     
-    @State private var testString: String = ""
+    @State private var simpleDomainErrorExampleTestString: String = ""
     @State private var simpleDomainErrorExampleResultNumber: Int? = nil
     @State private var simpleDomainErrorExampleErrorDescription: String = "no error"
     
+    @State private var recoverableErrorExampleTestString: String = ""
     @State private var recoverableErrorExampleResultNumber: Int? = nil
     @State private var recoverableErrorExampleErrorDescription: String = "no error"
     
+    @State private var universalErrorErrorExampleTestString: String = ""
     @State private var universalErrorExampleResultNumber: Int = -1
     
     var body: some View {
@@ -44,10 +46,10 @@ struct ContentView: View {
                     Text("StringToInt:")
                     TextField(
                         "Test String",
-                        text: $testString
+                        text: $simpleDomainErrorExampleTestString
                     )
                     .onSubmit {
-                        switch stringToIntObject.simpleDomainErrorExample(string: testString) {
+                        switch stringToIntObject.simpleDomainErrorExample(string: simpleDomainErrorExampleTestString) {
                         case let .success(resultNumberRow):
                             simpleDomainErrorExampleResultNumber = resultNumberRow
                             simpleDomainErrorExampleErrorDescription = "no error"
@@ -60,7 +62,7 @@ struct ContentView: View {
                     .disableAutocorrection(true)
                     .border(.secondary)
                 }
-                Text("input String: \(testString)")
+                Text("input String: \(simpleDomainErrorExampleTestString)")
                 HStack {
                     Text("output result:")
                     if let message = simpleDomainErrorExampleResultNumber {
@@ -82,10 +84,10 @@ struct ContentView: View {
                     Text("StringToInt:")
                     TextField(
                         "Test String",
-                        text: $testString
+                        text: $recoverableErrorExampleTestString
                     )
                     .onSubmit {
-                        let result = stringToIntObject.recoverableErrorExample(string: testString)
+                        let result = stringToIntObject.recoverableErrorExample(string: recoverableErrorExampleTestString)
                         switch result {
                         case let .success(resultNumberRow):
                             recoverableErrorExampleResultNumber = resultNumberRow
@@ -99,7 +101,7 @@ struct ContentView: View {
                     .disableAutocorrection(true)
                     .border(.secondary)
                 }
-                Text("input String: \(testString)")
+                Text("input String: \(recoverableErrorExampleTestString)")
                 HStack {
                     Text("output result:")
                     if let message = recoverableErrorExampleResultNumber {
@@ -121,16 +123,16 @@ struct ContentView: View {
                     Text("StringToInt:")
                     TextField(
                         "Test String",
-                        text: $testString
+                        text: $universalErrorErrorExampleTestString
                     )
                     .onSubmit {
-                        universalErrorExampleResultNumber = stringToIntObject.universalErrorExample(string: testString)
+                        universalErrorExampleResultNumber = stringToIntObject.universalErrorExample(string: universalErrorErrorExampleTestString)
                     }
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .border(.secondary)
                 }
-                Text("input String: \(testString)")
+                Text("input String: \(universalErrorErrorExampleTestString)")
                 HStack {
                     Text("output result:")
                     if let message = universalErrorExampleResultNumber {
