@@ -22,6 +22,7 @@ class StringToInt: ObservableObject {
     func simpleDomainErrorExample(string: String) -> Result<Int, ToIntError> {
         guard let number = simpleDomainErrorExampleToInt(string) else {
             Crashlytics.crashlytics().record(error: ToIntError.simpleDomainError)
+            Crashlytics.crashlytics().log("log \(String(describing: ToIntError.simpleDomainError.description))")
             return .failure(.simpleDomainError)
         }
         Crashlytics.crashlytics().log("success \(number)")
@@ -50,10 +51,12 @@ class StringToInt: ObservableObject {
         } catch ToIntError.recoverableError {
             //print("\(10)〜\(20)の値を入力して下さい。")
             Crashlytics.crashlytics().record(error: ToIntError.recoverableError)
+            Crashlytics.crashlytics().log("log \(String(describing: ToIntError.recoverableError.description))")
             return .failure(ToIntError.recoverableError)
         } catch {
             //print("整数を入力して下さい。")
             Crashlytics.crashlytics().record(error: ToIntError.simpleDomainError)
+            Crashlytics.crashlytics().log("log \(String(describing: ToIntError.simpleDomainError.description))")
             return .failure(ToIntError.simpleDomainError)
         }
     }
