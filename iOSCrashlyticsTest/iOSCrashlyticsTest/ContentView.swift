@@ -8,22 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    //    var body: some View {
-    //        VStack{
-    //            Text("Hello, world!")
-    //                .padding()
-    //            Button("Crash") {
-    //                Crashlytics.crashlytics().log("log Crash was triggered")
-    //                fatalError("Crash was triggered")
-    //            }
-    //
-    //        }
-    //        .onAppear(perform: {
-    //            Crashlytics.crashlytics().log("ContentView Appear")
-    //            simpleDomainErrorExample(string: "test")
-    //        })
-    //    }
     @ObservedObject var stringToIntObject: StringToInt
     
     @State private var simpleDomainErrorExampleTestString: String = ""
@@ -34,14 +18,17 @@ struct ContentView: View {
     @State private var recoverableErrorExampleResultNumber: Int? = nil
     @State private var recoverableErrorExampleErrorDescription: String = "no error"
     
-    @State private var universalErrorErrorExampleTestString: String = ""
+    @State private var universalErrorExampleTestString: String = ""
     @State private var universalErrorExampleResultNumber: Int = -1
+    
+    @State private var logicFailureExampleTestString: String = ""
+    @State private var logicFailureExampleResultNumber: Int = -1
     
     var body: some View {
         VStack(alignment: .leading) {
             
             Group {
-                Text("simpleDomainErrorExample")
+                Text("simple Domain Error Example")
                 HStack {
                     Text("StringToInt:")
                     TextField(
@@ -79,7 +66,7 @@ struct ContentView: View {
             
             Divider()
             Group {
-                Text("recoverableErrorExample")
+                Text("recoverable Error Example")
                 HStack {
                     Text("StringToInt:")
                     TextField(
@@ -118,24 +105,50 @@ struct ContentView: View {
             
             Divider()
             Group {
-                Text("universalErrorExample")
+                Text("universal Error Example")
                 HStack {
                     Text("StringToInt:")
                     TextField(
                         "Test String",
-                        text: $universalErrorErrorExampleTestString
+                        text: $universalErrorExampleTestString
                     )
                     .onSubmit {
-                        universalErrorExampleResultNumber = stringToIntObject.universalErrorExample(string: universalErrorErrorExampleTestString)
+                        universalErrorExampleResultNumber = stringToIntObject.universalErrorExample(string: universalErrorExampleTestString)
                     }
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .border(.secondary)
                 }
-                Text("input String: \(universalErrorErrorExampleTestString)")
+                Text("input String: \(universalErrorExampleTestString)")
                 HStack {
                     Text("output result:")
                     if let message = universalErrorExampleResultNumber {
+                        Text("\(message)")
+                            .foregroundColor(.green)
+                    }
+                }
+            }
+            
+            Divider()
+            Group {
+                Text("logic Failure Example")
+                HStack {
+                    Text("StringToInt:")
+                    TextField(
+                        "Test String",
+                        text: $logicFailureExampleTestString
+                    )
+                    .onSubmit {
+                        logicFailureExampleResultNumber = stringToIntObject.logicFailureExample(string: logicFailureExampleTestString)
+                    }
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
+                    .border(.secondary)
+                }
+                Text("input String: \(logicFailureExampleTestString)")
+                HStack {
+                    Text("output result:")
+                    if let message = logicFailureExampleResultNumber {
                         Text("\(message)")
                             .foregroundColor(.green)
                     }

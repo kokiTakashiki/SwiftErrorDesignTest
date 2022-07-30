@@ -59,6 +59,9 @@ class StringToInt: ObservableObject {
     }
     
     // Universal error
+    /*
+     整数に変換できないような不正な文字列が toInt に渡されたらプログラムが停止すればいい、エラー処理をする必要はないと、考える場合に採用します。
+     */
     func universalErrorExample(string: String) -> Int {
         guard let number = Int(string) else {
             Crashlytics.crashlytics().record(error: ToIntError.universalError)
@@ -66,6 +69,21 @@ class StringToInt: ObservableObject {
             fatalError(String(describing: ToIntError.universalError.description))
         }
         Crashlytics.crashlytics().log("success \(number)")
+        return number
+    }
+    
+    // Logic failure
+    /*
+     整数に変換できない文字列を toInt に渡していること自体がバグだ、コードを修正する必要がある、と考える場合に採用します。
+     Logic failure は実行時に起こってはいけないので、起こった場合の挙動は未定義です。
+     */
+    func logicFailureExample(string: String) -> Int {
+        guard let number = Int(string) else {
+            Crashlytics.crashlytics().record(error: ToIntError.logicFailure)
+            Crashlytics.crashlytics().log("log Crash was \(String(describing: ToIntError.logicFailure.description))")
+            preconditionFailure(String(describing: ToIntError.logicFailure.description))
+        }
+        Crashlytics.crashlytics().log("success \(string)")
         return number
     }
 }
